@@ -1,0 +1,17 @@
+.image-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden; /* Masque les barres de défilement */
+  white-space: nowrap;
+  margin-top: 60px; /* Ajoutez un espace de 20 pixels en haut */
+
+}
+
+.image-item {
+  flex: 0 0 auto;
+  height: 100%;
+  display: inline-block;
+  margin: 0 5px;
+}
