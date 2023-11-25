@@ -8,11 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:ssr": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --configuration=production && node dist/server/main.js"
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
   },
   "private": true,
   "dependencies": {
