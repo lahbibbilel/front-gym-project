@@ -152,7 +152,7 @@ export class DashboardUserComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Erreur',
-            text: 'La carte bancaire saisie n\'est pas valide.'
+            text: 'invalide card.'
           });
           return; // Arrêter l'ajout au panneau si la carte n'est pas valide
         }
@@ -168,7 +168,7 @@ export class DashboardUserComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: 'Produit ajouté avec succès!'
+          text: 'Add with success!'
         });
       }
     });
@@ -247,7 +247,7 @@ export class DashboardUserComponent implements OnInit {
       const newSolde = solde - selectedProduct.productPrice;
 
       // Effectuer une requête HTTP PUT pour mettre à jour le solde dans la banque
-      this.http.put(`http://localhost:3000/bank/${cardNumber}`, { solde: newSolde })
+      this.http.put(`http://3.88.251.161:3000/bank/${cardNumber}`, { solde: newSolde })
         .subscribe(
           (response) => {
             console.log('Solde mis à jour dans la banque:', response);

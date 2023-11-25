@@ -15,7 +15,8 @@
 
 <div id="mySidenav" class="sidenav">
   <div class="sidenav-header">
-    <img src="assets/gymproj.png" alt="Logo" />
+    <img src="assets/gymproj.png"  />
+    <h4> GLSII-A</h4>
   </div>
   <p class="logo"><span>
     </span></p>
@@ -31,7 +32,7 @@
 
   <div class="head">
     <div class="col-div-6">
-      <span style="font-size:30px;cursor:pointer; color: #0c0c0c;" class="nav"  >☰ Welcome</span>
+      <span style="font-size:30px;cursor:pointer; color: #0c0c0c;" class="nav"  >  Welcome</span>
       <span style="font-size:30px;cursor:pointer; color: white;" class="nav2"  >☰ Dashboard</span>
     </div>
 
@@ -60,16 +61,23 @@
 <hr>
   <div class="row">
     <div class="col-sm-6" *ngFor="let prod of product">
+
       <div class="card">
+        <img src="assets/price-1.png" class="pro-img" alt="price" />
+
         <div class="card-body">
+
           <h5 class="card-title">{{ prod.title }}</h5>
           <p class="card-text">{{ prod.description }}</p>
+          <p class="card-text">{{ prod.key_feature }} {{ prod.prix }} $</p>
+
+
           <button (click)="addToPanel(_id, prod._id)" class="btn btn-primary">Add to Panel</button>
+
         </div>
       </div>
     </div>
   </div>
-
 
   <div class="clearfix"></div>
   <br/><br/>
@@ -81,18 +89,18 @@
           <tr>
             <th>Subscription (in days)</th>
             <th>Card Number</th>
-            <th>User ID</th>
-            <th>Product Price</th>
+            <th>Price </th>
+            <th>Products Price</th>
             <th>Total</th>
           </tr>
           <tr *ngFor="let item of filteredPanier">
             <td>{{ item.number_months * 30}} days</td>
             <td>{{ item.cardNumber }}</td>
-            <td *ngIf="item.productPrice">{{ item.productPrice }}</td>
+            <td *ngIf="item.productPrice">{{ item.productPrice }} $</td>
             <td *ngIf="item.productPrice">{{ item.productPrice * (item.number_months ) }} $</td>
             <!-- Modifier la ligne du bouton "bank" -->
             <td>
-              <button (click)="payedBank(item.cardNumber)" class="btn btn-primary">bank</button>
+              <button (click)="payedBank(item.cardNumber)" class="btn btn-primary">payed</button>
               <ng-container *ngIf="item.paymentSuccess">
                 <button (click)="printSelectedSubscription(item)" class="btn btn-danger">Print</button>
               </ng-container>
@@ -106,7 +114,10 @@
 
 
 </div>
-
+<!--
+<div class="footer__bar">
+  Copyright © 2023 GLSII-A-Rmili-Lahbib-Dhiflaoui.
+</div> -!-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -25,12 +25,12 @@
       </div>
     </div>
     <ul class="nav__links" id="nav-links">
-      <li class="link"><a href="#home">Home</a></li>
-      <li class="link"><a (click)="navigateToSection('aboutus')">About</a></li>
-      <li class="link"><a href="#class">Classes</a></li>
+      <li class="link"><a routerLink="/home">Home</a></li>
+     <!-- <li class="link"><a (click)="navigateToSection('aboutus')">About</a></li>
+     -!--> <li class="link"><a routerLink="/user/login">Login</a></li>
       <li class="link"><a (click)="navigateToSection('trainer')">trainer</a></li>
       <li class="link"><a (click)="navigateToSection('price')">Pricing</a></li>
-      <li class="link"><button class="btn">Contact Us</button></li>
+      <li class="link"><a routerLink="/user">SignUp</a></li>
     </ul>
   </nav>
   <hr>
@@ -68,14 +68,13 @@
     <div class="trainer__card">
       <img src="assets/trainer-1.jpg" alt="trainer" />
     </div>
-    <div class="trainer__card">
-      <div class="trainer__content">
-        <h4>James Rodriguez</h4>
-        <h5>Strength and Conditioning</h5>
+    <div class="trainer__card" *ngFor="let t of trainers">
+      <div class="trainer__content" *ngIf="t.name==='Rmili ahmed'">
+        <h4>{{t.name}}</h4>
+        <h5>{{t.speciality}}</h5>
         <hr />
         <p>
-          With a background in competitive sports, he's dedicated to helping
-          you reach your peak physical performance.
+          {{t.description}}
         </p>
         <div class="trainer__socials">
           <a href="#"><i class="ri-facebook-fill"></i></a>
@@ -88,14 +87,13 @@
     <div class="trainer__card">
       <img src="assets/trainer-2.jpg" alt="trainer" />
     </div>
-    <div class="trainer__card">
-      <div class="trainer__content">
-        <h4>Mark Harris</h4>
-        <h5>HIIT and Functional</h5>
+    <div class="trainer__card" *ngFor="let t of trainers">
+      <div class="trainer__content" *ngIf="t.name==='lahbib bilel'">
+        <h4>{{t.name}}</h4>
+        <h5>{{t.speciality}}</h5>
         <hr />
         <p>
-          His energetic and dynamic workouts are designed to push your
-          limits, boost metabolism, and torch calories.
+         {{t.description}}
         </p>
         <div class="trainer__socials">
           <a href="#"><i class="ri-facebook-fill"></i></a>
@@ -105,17 +103,16 @@
         </div>
       </div>
     </div>
-    <div class="trainer__card">
+    <div class="trainer__card" >
       <img src="assets/trainer-3.jpg" alt="trainer" />
     </div>
-    <div class="trainer__card">
-      <div class="trainer__content">
-        <h4>Emily Davis</h4>
-        <h5>Yoga and Mindfulness</h5>
+    <div class="trainer__card" *ngFor="let t of trainers">
+      <div class="trainer__content" *ngIf="t.name==='Amira dhiflaoui'">
+        <h4>{{t.name}}</h4>
+        <h5>{{t.speciality}}</h5>
         <hr />
         <p>
-          Emily's sessions are about physical postures and also about
-          cultivating inner peace and mindfulness.
+         {{t.description}}
         </p>
         <div class="trainer__socials">
           <a href="#"><i class="ri-facebook-fill"></i></a>
@@ -142,6 +139,7 @@
         <hr />
         <h4>Key Features</h4>
         <p>{{ prod.key_feature }}</p>
+        <p>{{prod.prix}} $</p>
         <!-- Add other key features here -->
         <button class="btn join-today-btn" routerLink="/user/login">Join Today</button>
 
@@ -162,7 +160,7 @@
   <div class="section__container footer__container">
     <div class="footer__col">
       <div class="footer__logo">
-        <a href="#"><img src="assets/gymproj.png" alt="logo" />Power</a>
+        <a href="#"><img src="assets/gymproj.png" alt="logo" />GLSII-A</a>
       </div>
       <p>
         Take the first step towards a healthier, stronger you with our
@@ -176,34 +174,34 @@
       </div>
     </div>
     <div class="footer__col">
-      <h4>Company</h4>
+     <!-- <h4>Company</h4>
       <div class="footer__links">
         <a href="#">Business</a>
         <a href="#">Franchise</a>
         <a href="#">Partnership</a>
         <a href="#">Network</a>
-      </div>
+      </div>-!-->
     </div>
     <div class="footer__col">
-      <h4>About Us</h4>
+     <!-- <h4>About Us</h4>
       <div class="footer__links">
         <a href="#">Blogs</a>
         <a href="#">Security</a>
         <a href="#">Careers</a>
-      </div>
+      </div>-!-->
     </div>
     <div class="footer__col">
-      <h4>Contact</h4>
+      <!--<h4>Contact</h4>
       <div class="footer__links">
         <a href="#">Contact Us</a>
         <a href="#">Privacy Policy</a>
         <a href="#">Terms & Conditions</a>
         <a href="#">BMI Calculator</a>
-      </div>
+      </div>-!-->
     </div>
   </div>
   <div class="footer__bar">
-    Copyright © 2023 Web Design Mastery. All rights reserved.
+    Copyright © 2023 GLSII-A-Rmili-Lahbib-Dhiflaoui.
   </div>
 </footer>
 

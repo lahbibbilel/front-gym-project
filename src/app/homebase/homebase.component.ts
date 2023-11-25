@@ -5,6 +5,7 @@ import {ProductsService} from "./products.service";
 import {Observable} from "rxjs";
 import {User} from "../user/user";
 import {Router} from "@angular/router";
+import {TrainerService} from "./trainer.service";
 
 @Component({
   selector: 'app-homebase',
@@ -14,13 +15,13 @@ import {Router} from "@angular/router";
 export class HomebaseComponent implements OnInit {
 
 
-  constructor(private service: ProductsService,private router :Router) {
+  constructor(private service: ProductsService,
+              private router :Router,
+              private trainer : TrainerService) {
   }
 
-
-
   product!: any
-
+  trainers: any[] = []; // Assuming trainers is an array
   ngOnInit(): void {
     this.service.getProducts().subscribe(
       (data: any[]) => {
@@ -31,6 +32,16 @@ export class HomebaseComponent implements OnInit {
         console.error('Error fetching users:', error);
       }
     );
+
+    this.trainer.getTrainers().subscribe(
+      (date : any[])=>{
+        this.trainers=date;
+        console.log("trainers success", this.trainers)
+      },
+      (error)=>{
+        console.log("any trainers founded")
+      }
+    )
 
     const menuBtn = document.getElementById("menu-btn");
     const navLinks = document.getElementById("nav-links");

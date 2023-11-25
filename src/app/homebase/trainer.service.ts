@@ -5,15 +5,14 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class BankService {
+export class TrainerService {
 
   constructor(private http : HttpClient) { }
-//baseUrl = "http://localhost:3000/bank"
-  baseUrl = "http://3.88.251.161:3000/bank"
 
-  getBank():Observable<any>
-  {
-    return this.http.get<any>(this.baseUrl)
-  }
-
+url = "http://3.88.251.161:3000/trainer"
+//url local
+getTrainers(): Observable<any>
+{
+  return this.http.get(this.url)
+}
 }

@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ConsummerApiService {
-  private baseUrl = 'http://localhost:3000/user';
+  private baseUrl = 'http://3.88.251.161:3000/user';
   constructor(private http : HttpClient) {
 
   }
