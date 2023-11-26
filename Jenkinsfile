@@ -1,22 +1,29 @@
-node {
+pipeline {
+    agent any
 
     stages {
         stage('Checkout SCM') {
-                git branch:'master', url 'https://github.com/lahbibbilel/front-gym-project.git'
-
+            steps {
+                git branch: 'master', url: 'https://github.com/lahbibbilel/front-gym-project.git'
+            }
         }
 
         stage('Install node modules') {
-
+            steps {
                 sh 'npm install'
             }
-        stage('Build') {
+        }
 
-                 sh 'ng build'
-             }
-        stage('Build') {
+        stage('Angular Build') {
+            steps {
+                sh 'ng build'
+            }
+        }
 
-                 sh 'pm2 restart all'
-               }
- }
+        stage('PM2 Restart') {
+            steps {
+                sh 'pm2 restart all'
+            }
+        }
+    }
 }
