@@ -34,7 +34,10 @@ pipeline {
 
         stage('PM2 Restart') {
             steps {
-                sh 'pm2 restart all'
+                script {
+                    sh 'pm2 list' // Add this line to check the PM2 process list
+                    sh 'pm2 restart all'
+                }
             }
         }
     }
