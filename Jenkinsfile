@@ -36,6 +36,7 @@ pipeline {
             steps {
                 script {
                     sh 'pm2 list' // Add this line to check the PM2 process list
+                    sh 'pm2 save'
                     sh 'pm2 restart all'
                 }
             }
