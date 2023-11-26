@@ -27,9 +27,7 @@ pipeline {
                 script {
                     def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                     def ngHome = "${nodejsHome}/bin/ng"
-                    // Increase the heap memory for the ng build command
-                    def ngBuildCmd = "${ngHome} build --max_old_space_size=4096" // You can adjust the memory size as needed
-                    sh ngBuildCmd
+                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngHome} build"
                 }
             }
         }
