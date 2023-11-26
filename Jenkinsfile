@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Nodejs_auto' // Name of the NodeJS installation configured in Jenkins
+    }
+
     stages {
         stage('Checkout SCM') {
             steps {
@@ -10,7 +14,11 @@ pipeline {
 
         stage('Install node modules') {
             steps {
-                sh 'npm install'
+                script {
+                    def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    def npmHome = "${nodejsHome}/bin/npm"
+                    sh "${npmHome} install"
+                }
             }
         }
 
