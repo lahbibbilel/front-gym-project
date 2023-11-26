@@ -2,30 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/master']],
-                          userRemoteConfigs: [[url: 'https://github.com/lahbibbilel/front-gym-project.git']]])
+                git branch: 'master', url: 'https://github.com/lahbibbilel/front-gym-project.git'
             }
         }
 
-        stage('Install and Build') {
+        stage('Install node modules') {
             steps {
                 sh 'npm install'
-                sh 'ng build --prod'
             }
         }
 
-        stage('Restart with PM2') {
+        stage('Angular Build') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'pm2 restart all'
-                    } else {
-                        bat 'pm2 restart all'
-                    }
-                }
+                sh 'ng build'
+            }
+        }
+
+        stage('PM2 Restart') {
+            steps {
+                sh 'pm2 restart all'
             }
         }
     }
