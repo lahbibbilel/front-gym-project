@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Nodejs_auto' // Name of the NodeJS installation configured in Jenkins
+        nodejs 'Nodejs_auto'
     }
 
     stages {
@@ -35,9 +35,9 @@ pipeline {
       stage('PM2 Restart') {
           steps {
               script {
-                  sh 'pm2 list' // Check the PM2 process list
-                  sh 'pm2 save --force' // Save the current process list
-                  sh 'pm2 restart all || true' // Restart all processes or ignore failure if none exist
+                  sh 'pm2 list'
+                  sh 'pm2 save --force'
+                  sh 'pm2 restart all || true'
               }
           }
       }
