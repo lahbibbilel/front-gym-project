@@ -38,14 +38,11 @@ pipeline {
                     def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                     def ngHome = "${nodejsHome}/bin/ng"
 
-                    // Lancer le projet Angular avec le port 4200 en arrière-plan
-                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check &"
-
-                    // Attendre un moment pour que le serveur Angular démarre
-                    sleep time: 3, unit: 'MINUTES'
-
-                    // Arrêter proprement le serveur Angular
-                    sh "${ngHome} stop"
+                    // Start the Angular project on port 4200
+                    def ngServe = "${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check"
+                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngServe} &"
+                    sleep 180 // Wait for 3 minutes (or a reasonable time to test server execution)
+                    sh "${ngHome} stop" // Stop the Angular server
                 }
             }
         }
