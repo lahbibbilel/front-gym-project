@@ -42,7 +42,9 @@ pipeline {
                     def ngServe = "${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check"
                     sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngServe} &"
                     sleep 180 // Wait for 3 minutes (or a reasonable time to test server execution)
-                    sh "${ngHome} stop" // Stop the Angular server
+
+                    // Stop the Angular server using pkill
+                    sh "pkill -f 'ng serve'"
                 }
             }
         }
