@@ -10,7 +10,7 @@ export class ProductsService {
   constructor(private httpclient : HttpClient) { }
 
  // url = "http://localhost:3000/product";
-  url = "http://3.88.251.161:3000/product"
+  url = "http://54.174.207.177:3000/product"
   getProducts() : Observable<any[]>
 {
 return this.httpclient.get<any[]>(this.url)

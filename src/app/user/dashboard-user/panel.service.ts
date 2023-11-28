@@ -10,7 +10,7 @@ export class PanelService {
 
   constructor(private http : HttpClient) { }
 
-public baseUrl = 'http://3.88.251.161:3000/panel'
+public baseUrl = 'http://54.174.207.177:3000/panel'
 
   getPanier(): Observable<any> {
     return this.http.get<any>(this.baseUrl).pipe(

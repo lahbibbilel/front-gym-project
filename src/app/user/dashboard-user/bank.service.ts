@@ -9,7 +9,7 @@ export class BankService {
 
   constructor(private http : HttpClient) { }
 //baseUrl = "http://localhost:3000/bank"
-  baseUrl = "http://3.88.251.161:3000/bank"
+  baseUrl = "http://54.174.207.177:3000/bank"
 
   getBank():Observable<any>
   {

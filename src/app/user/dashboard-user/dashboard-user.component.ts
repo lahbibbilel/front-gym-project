@@ -247,7 +247,7 @@ export class DashboardUserComponent implements OnInit {
       const newSolde = solde - selectedProduct.productPrice;
 
       // Effectuer une requête HTTP PUT pour mettre à jour le solde dans la banque
-      this.http.put(`http://3.88.251.161:3000/bank/${cardNumber}`, { solde: newSolde })
+      this.http.put(`http://54.174.207.177:3000/bank/${cardNumber}`, { solde: newSolde })
         .subscribe(
           (response) => {
             console.log('Solde mis à jour dans la banque:', response);

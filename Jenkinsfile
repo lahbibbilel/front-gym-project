@@ -1,4 +1,3 @@
-//jenkinsFile
 pipeline {
     agent any
 
@@ -33,15 +32,16 @@ pipeline {
             }
         }
 
-      stage('PM2 Restart') {
-          steps {
-              script {
-                  sh 'pm2 list'
-                  sh 'pm2 save --force'
-                  sh 'pm2 restart all || true'
-              }
-          }
-      }
+        stage('Run Angular Project') {
+            steps {
+                script {
+                    def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    def ngHome = "${nodejsHome}/bin/ng"
 
+                    // Lancer le projet Angular avec le port 4200
+                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check"
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ export class TrainerService {
 
   constructor(private http : HttpClient) { }
 
-url = "http://3.88.251.161:3000/trainer"
+url = "http://54.174.207.177:3000/trainer"
 //url local
 getTrainers(): Observable<any>
 {
