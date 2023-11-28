@@ -32,20 +32,21 @@ pipeline {
             }
         }
 
-       stage('Run Angular Project') {
-           steps {
-               script {
-                   def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                   def ngHome = "${nodejsHome}/bin/ng"
-                   def serverProcess = null
+        stage('Run Angular Project') {
+            steps {
+                script {
+                    def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    def ngHome = "${nodejsHome}/bin/ng"
 
-                   try {
-                       serverProcess = sh(script: "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check", returnStdout: true)
-                       sh "sleep 120"
-                   } finally {
-                       if (serverProcess) {
-                           sh "kill ${serverProcess}"
-                       }
+                    // Lancer le projet Angular avec le port 4200 en arrière-plan
+                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngHome} serve --port 4200 --host 0.0.0.0 --disable-host-check &"
+
+                    // Attendre un moment pour que le serveur Angular démarre
+                    sleep time: 3, unit: 'MINUTES'
+
+                    // Arrêter proprement le serveur Angular
+                    sh "${ngHome} stop"
+                }
             }
         }
     }
