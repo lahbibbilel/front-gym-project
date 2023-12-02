@@ -32,12 +32,23 @@ pipeline {
             }
         }
 
+        stage('Install and Start HTTPD') {
+            steps {
+                // Install httpd (Apache)
+                sh 'sudo yum install -y httpd'
+
+                // Start httpd (Apache)
+                sh 'sudo systemctl start httpd'
+            }
+        }
+
         stage('Deploy to httpd') {
             steps {
-                // Assuming your httpd document root is /var/www/html
-                sh 'sudo cp -r dist/* /var/www/html/'
-                // Restart httpd to apply changes
-                sh 'sudo systemctl restart httpd'
+                // Create the directory if it doesn't exist
+                sh 'sudo mkdir -p /var/www/html/'
+
+                // Copy files to the destination
+                sh 'sudo cp -r dist/front-gym-project/* /var/www/html/'
             }
         }
     }
