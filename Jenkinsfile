@@ -32,20 +32,12 @@ pipeline {
             }
         }
 
-        stage('Run Angular Project') {
+        stage('Deploy to httpd') {
             steps {
-                script {
-                    def nodejsHome = tool name: 'Nodejs_auto', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                    def ngHome = "${nodejsHome}/bin/ng"
-
-                    // Start the Angular project on port 4200 with localhost
-                    def ngServe = "${ngHome} serve --port 4200 --host localhost --disable-host-check"
-                    sh "export NODE_OPTIONS=--max_old_space_size=4096 && ${ngServe} &"
-                    sleep 180 // Wait for 3 minutes (or a reasonable time to test server execution)
-
-                    // Stop the Angular server using pkill
-                    sh "pkill -f 'ng serve'"
-                }
+                // Assuming your httpd document root is /var/www/html
+                sh 'sudo cp -r dist/* /var/www/html/'
+                // Restart httpd to apply changes
+                sh 'sudo systemctl restart httpd'
             }
         }
     }

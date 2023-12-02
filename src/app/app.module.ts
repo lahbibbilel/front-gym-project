@@ -17,6 +17,9 @@ import { HeaderUserComponent } from './user/header-user/header-user.component';
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import { HomebaseComponent } from './homebase/homebase.component';
+import { DashboardAdminComponent } from './user/dashboard-admin/dashboard-admin.component';
+import { UserListComponent } from './user/dashboard-admin/user-list/user-list.component';
+import { PanelListComponent } from './user/dashboard-admin/panel-list/panel-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { HomebaseComponent } from './homebase/homebase.component';
     FooterUserComponent,
     HeaderUserComponent,
     HomebaseComponent,
+    DashboardAdminComponent,
+    UserListComponent,
+    PanelListComponent,
   ],
   imports: [
     HttpClientModule,

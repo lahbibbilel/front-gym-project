@@ -120,6 +120,42 @@ export class DashboardUserComponent implements OnInit {
 //    }
 
   }
+  deletePanel(panelId: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this product!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Send delete request to Node.js backend
+        this.panel.deletePanel(panelId).subscribe(
+          () => {
+            Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+            // Optionally, update the product list after deletion
+            this.refreshPanelList();
+          },
+          (error) => {
+            console.error('Error deleting product:', error);
+            Swal.fire('Error!', 'Failed to delete the product.', 'error');
+          }
+        );
+      }
+    });
+  }
+  refreshPanelList() {
+    // Fetch the updated product list after deletion
+    this.panel.getPanier().subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    );
+  }
+
+
   addToPanel(userId: string, productId: string) {
     // Afficher une alerte avec les ID dans les deux premiers champs d'entrée
     Swal.fire({
@@ -245,9 +281,9 @@ export class DashboardUserComponent implements OnInit {
       }
       // Mettre à jour le solde dans la banque
       const newSolde = solde - selectedProduct.productPrice;
-
+      //http://54.174.207.177:3000/bank/
       // Effectuer une requête HTTP PUT pour mettre à jour le solde dans la banque
-      this.http.put(`http://54.174.207.177:3000/bank/${cardNumber}`, { solde: newSolde })
+      this.http.put(`http://localhost:3000/bank/${cardNumber}`, { solde: newSolde })
         .subscribe(
           (response) => {
             console.log('Solde mis à jour dans la banque:', response);
@@ -267,47 +303,72 @@ export class DashboardUserComponent implements OnInit {
       });
     }
   }
-
   printSelectedSubscription(item: any) {
+    const currentDate = new Date();
+    const subscriptionEndDate = new Date(currentDate);
+    subscriptionEndDate.setDate(subscriptionEndDate.getDate() + (item.number_months * 30));
+
     const documentDefinition = {
       content: [
-        { text: 'Abonnement', style: 'header' },
+        { text: 'Your Gym Subscription', style: 'header' },
         ' ',
         {
-          table: {
-            headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
-            body: [
-              [
-                'Subscription (in days)',
-                'Card Number',
-                'User ID',
-                'Product Price',
-                'Total'
-              ],
-              [
+          columns: [
+            {
+              width: '*',
+              stack: [
+                { text: 'Subscription (in days):', bold: true, margin: [0, 20, 0, 0] },
                 `${item.number_months * 30} days`,
+                { text: 'Card Number:', bold: true, margin: [0, 10, 0, 0] },
                 item.cardNumber,
+                { text: 'User ID:', bold: true, margin: [0, 10, 0, 0] },
                 item.user,
+                { text: 'Product Price:', bold: true, margin: [0, 10, 0, 0] },
                 item.productPrice || '',
-                item.productPrice ? `${item.productPrice * item.number_months} $` : ''
-              ]
-            ]
-          }
-        }
+                { text: 'Total:', bold: true, margin: [0, 10, 0, 0] },
+                item.productPrice ? `${item.productPrice * item.number_months} $` : '',
+                { text: 'Start Date:', bold: true, margin: [0, 10, 0, 0] },
+                currentDate.toLocaleString(),
+                { text: 'End Date:', bold: true, margin: [0, 10, 0, 0] },
+                subscriptionEndDate.toLocaleString(),
+              ],
+            },
+            {
+              width: 'auto',
+              stack: [
+                { image: this.imgSrc as string, width: 100, height: 100, alignment: 'right' },
+              ],
+            },
+          ],
+        },
       ],
       styles: {
         header: {
           fontSize: 18,
-          bold: true
-        }
-      }
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+      },
     };
 
     // Generate PDF for the selected item
-    const pdfDoc = pdfMake.createPdf(documentDefinition);
+    const pdfDoc = (pdfMake as any).createPdf(documentDefinition);
     pdfDoc.download('selected_subscription.pdf');
   }
+
+  showCart: boolean = false; // Définir la variable pour contrôler l'affichage du panier
+  toggleCartVisibility() {
+    this.showCart = !this.showCart;
+  }
+
+  showTable: boolean = false; // Définir la variable pour contrôler l'affichage du panier
+  toggleTableVisibility() {
+    this.showTable = !this.showTable;
+  }
+
+
+
   updateUser() {
     const userId = this.loginServ.getId();
 

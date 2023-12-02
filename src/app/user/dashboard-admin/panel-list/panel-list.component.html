@@ -1,0 +1,49 @@
+<div class="col-div-10">
+  <div class="box-10">
+    <div class="content-box">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- Search Input with Search Icon -->
+        <!-- Buttons -->
+        <div></div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <a class="icon-a" (click)="searchPanels()">
+              <i class="fa fa-search"></i> Search
+            </a>
+          </span>
+        </div>
+        <input type="search" class="form-control" [(ngModel)]="value" placeholder="Search...">
+      </div>
+      <br>
+
+      <table class="table table-transparent table-striped">
+        <thead>
+        <tr>
+          <th>username</th>
+          <th>product</th>
+          <th>number of months</th>
+          <th>card_number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let p of filteredPanel">
+             <td>{{ getUserEmail(p.user) }}</td>
+          <td>{{ getProductKeyFeature(p.product) }}</td>
+          <td>{{ p.number_months }}</td>
+          <td>{{ p.cardNumber }}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Action buttons">
+              <button type="submit" (click)="deletePanel(p._id)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

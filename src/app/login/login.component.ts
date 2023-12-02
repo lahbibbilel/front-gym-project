@@ -31,13 +31,18 @@ this.service.removeToken()
           const mail = response.email
           const key = response._id
           const img = response.image
+          const role = response.role; // Assuming you receive the user's role
           this.service.saveImage(img)
           this.service.saveToken(authToken);
           this.service.saveName(name)
           this.service.savemail(mail)
           this.service.saveId(key)
 
-          this.route.navigateByUrl('/user/dashboardUser');
+          if (role === 'ADMIN') {
+            this.route.navigateByUrl('/user/dashboardAdmin');
+          } else {
+            this.route.navigateByUrl('/user/dashboardUser');
+          }
           this.toaster.success('Login successful');
 console.log(response,"data")
           console.log("image",img)

@@ -10,7 +10,9 @@ export class PanelService {
 
   constructor(private http : HttpClient) { }
 
-public baseUrl = 'http://54.174.207.177:3000/panel'
+//public baseUrl = 'http://54.174.207.177:3000/panel'
+
+  public baseUrl = 'http://localhost:3000/panel'
 
   getPanier(): Observable<any> {
     return this.http.get<any>(this.baseUrl).pipe(
@@ -26,5 +28,10 @@ public baseUrl = 'http://54.174.207.177:3000/panel'
   }
   savePanel(panel: any): Observable<any> {
     return this.http.post<any>(this.baseUrl, panel);
+  }
+
+  deletePanel(panelId:string):Observable<any>
+  {
+    return this.http.delete(`${this.baseUrl}/${panelId}`)
   }
 }

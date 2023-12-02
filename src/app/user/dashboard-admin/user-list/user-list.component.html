@@ -1,0 +1,64 @@
+<div class="col-div-10">
+  <div class="box-10">
+    <div class="content-box">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- Search Input with Search Icon -->
+        <!-- Buttons -->
+        <div>
+          <button type="submit" (click)="addUser()" >
+            <i class="fa-solid fa-square-plus"></i>
+          </button>
+
+        </div>
+      </div>
+
+      <table class="table table-transparent table-striped">
+  <!-- Ajoutez cette partie dans votre composant Angular -->
+  <div class="input-group">
+    <div class="input-group-prepend">
+    <span class="input-group-text">
+      <a class="icon-a" (click)="searchUsers()">
+        <i class="fa fa-search"></i> Search
+      </a>
+    </span>
+    </div>
+    <input type="search" class="form-control" [(ngModel)]="value" placeholder="Search...">
+  </div>
+  <br>
+  <!-- Mettez à jour votre tableau avec la version filtrée -->
+  <table class="table table-transparent table-striped">
+    <thead>
+    <tr>
+      <th>role</th>
+      <th>name</th>
+      <th>username</th>
+      <th>lastname</th>
+      <th>email</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of filteredUser">
+      <td>{{ p.role }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.username }}</td>
+      <td>{{ p.lastname }}</td>
+      <td>{{ p.email }}</td>
+      <td>
+        <!-- Edit and Delete buttons -->
+        <div class="btn-group" role="group" aria-label="Action buttons">
+          <!-- Edit Button -->
+          <button type="button" (click)="editUser(p._id, p)">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <!-- Delete Button -->
+          <button type="submit" (click)="deleteUser(p._id)">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</table>
+    </div></div></div>

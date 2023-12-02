@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Add Bootstrap CSS reference -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Styles for search input and buttons */
+    .input-group {
+      width: 300px; /* Adjust width as needed */
+    }
+
+    /* Optional: Adjust margins for buttons */
+    .btn {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <div class="sidenav-header">
+    <img src="assets/gymproj.png"  />
+    <h4> GLSII-A</h4>
+  </div>
+  <p class="logo"><span></span></p>
+  <br> <a class="icon-a" (click)="showProductList = true">
+  <i class="fa fa-products icons"></i> products
+</a>
+  <a class="icon-a" (click)="showUsers()">
+    <i class="fa fa-users icons"></i> users
+  </a>
+  <a class="icon-a" (click)="showPanels()">
+    <i class="fa fa-users icons"></i> panels
+  </a>
+  <a class="icon-a"><i class="fas fa-tools"></i> Setting</a>
+  <a class="icon-a"  (click)="logout()"><i class="fa fa-sign-out icons"></i> Logout</a>
+
+</div>
+<hr class="vertical-line">
+
+<div id="main">
+  <div class="head">
+    <div class="col-div-6">
+      <span style="font-size:30px;cursor:pointer; color: #ffffff;" class="nav">  Welcome</span>
+      <span style="font-size:30px;cursor:pointer; color: white;" class="nav2">☰ Dashboard</span>
+    </div>
+
+    <div class="col-div-6">
+      <div class="profile">
+        <img class="pro-img" />
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+          <a class="dropdown-item"><i class="fas fa-image"></i> Image</a>
+          <a class="dropdown-item" href="#"><i class="fas fa-circle-notch fa-spin"></i> Loading</a>
+        </div>
+        <p><span></span></p>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Edit your Profile
+        </a>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <br/>
+    <hr>
+  </div>
+
+  <!-- Buttons -->
+  <div class="col-div-10">
+    <div class="box-10">
+      <div class="content-box">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <!-- Search Input with Search Icon -->
+          <!-- Buttons -->
+          <div *ngIf="showProductList">
+            <button type="submit" (click)="addProduct()" >
+              <i class="fa-solid fa-square-plus"></i>
+            </button>
+
+          </div>
+        </div>
+        <table *ngIf="showProductList" class="table table-transparent table-striped">
+        <!-- Ajoutez cette partie dans votre composant Angular -->
+          <div class="input-group">
+            <div class="input-group-prepend">
+    <span class="input-group-text">
+      <a class="icon-a" (click)="searchProducts()">
+        <i class="fa fa-search"></i> Search
+      </a>
+    </span>
+            </div>
+            <input type="search" class="form-control" [(ngModel)]="value" placeholder="Search...">
+          </div>
+<br>
+          <!-- Mettez à jour votre tableau avec la version filtrée -->
+          <table class="table table-transparent table-striped">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Image</th>
+              <th>Description</th>
+              <th>Key Feature</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of filteredProd">
+              <td>{{ p.title }}</td>
+              <td>{{ p.image }}</td>
+              <td>{{ p.description }}</td>
+              <td>{{ p.key_feature }}</td>
+              <td>{{ p.prix }}</td>
+              <td>
+                <!-- Edit and Delete buttons -->
+                <div class="btn-group" role="group" aria-label="Action buttons">
+                  <!-- Edit Button -->
+                  <button type="button" (click)="editProduct(p._id, p)">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <!-- Delete Button -->
+                  <button type="submit" (click)="deleteProduct(p._id)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </table>
+        <div *ngIf="!showProductList">
+          <app-user-list *ngIf="showUsersPanel"></app-user-list>
+          <app-panel-list *ngIf="showPanelsPanel"></app-panel-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

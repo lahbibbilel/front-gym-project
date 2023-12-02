@@ -7,6 +7,9 @@ import {LoginComponent} from "./login/login.component";
 import {DashboardUserComponent} from "./user/dashboard-user/dashboard-user.component";
 import {GuardGuard} from "./guard.guard";
 import {HomebaseComponent} from "./homebase/homebase.component";
+import {DashboardAdminComponent} from "./user/dashboard-admin/dashboard-admin.component";
+import {UserListComponent} from "./user/dashboard-admin/user-list/user-list.component";
+import {PanelListComponent} from "./user/dashboard-admin/panel-list/panel-list.component";
 
 const routes: Routes = [
   { path: '', component: HomebaseComponent },
@@ -14,7 +17,11 @@ const routes: Routes = [
   {path:'user/getAll',component:GetAllComponent},
   {path:'user/login',component:LoginComponent},
   {path:'user/dashboardUser',component:DashboardUserComponent,canActivate:[GuardGuard]},
-  {path:'homebase',component:HomebaseComponent}
+  {path:'homebase',component:HomebaseComponent},
+  {path:'user/dashboardAdmin',component:DashboardAdminComponent},
+  {path:'user/dashboardAdmin/userList',component:UserListComponent},
+  {path:'user/dashboardAdmin/panel',component:PanelListComponent}
+
 
 
 ];
