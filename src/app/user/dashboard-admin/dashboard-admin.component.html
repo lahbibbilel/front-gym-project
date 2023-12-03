@@ -28,40 +28,43 @@
   </div>
   <p class="logo"><span></span></p>
   <br> <a class="icon-a" (click)="showProductList = true">
-  <i class="fa fa-products icons"></i> products
+  <i class="fas fa-clipboard-list" ></i> products
 </a>
   <a class="icon-a" (click)="showUsers()">
     <i class="fa fa-users icons"></i> users
   </a>
   <a class="icon-a" (click)="showPanels()">
-    <i class="fa fa-users icons"></i> panels
+    <i class="fas fa-solar-panel"></i> panels
   </a>
-  <a class="icon-a"><i class="fas fa-tools"></i> Setting</a>
   <a class="icon-a"  (click)="logout()"><i class="fa fa-sign-out icons"></i> Logout</a>
 
 </div>
 <hr class="vertical-line">
 
 <div id="main">
+
   <div class="head">
     <div class="col-div-6">
-      <span style="font-size:30px;cursor:pointer; color: #ffffff;" class="nav">  Welcome</span>
-      <span style="font-size:30px;cursor:pointer; color: white;" class="nav2">☰ Dashboard</span>
+      <span style="font-size:30px;cursor:pointer; color: #ffffff;" class="nav"  >  Welcome</span>
+      <span style="font-size:30px;cursor:pointer; color: white;" class="nav2"  >☰ Dashboard</span>
     </div>
 
     <div class="col-div-6">
+
+
       <div class="profile">
-        <img class="pro-img" />
+        <img [src]="imgSrc" class="pro-img" (click)="showProfileImage()" />
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
-          <a class="dropdown-item"><i class="fas fa-image"></i> Image</a>
+          <a class="dropdown-item" (click)="updateUser()"><i class="fas fa-edit"></i> Edit</a>
+          <a class="dropdown-item" (click)="updateUserImage()"><i class="fas fa-image"></i> Image</a>
           <a class="dropdown-item" href="#"><i class="fas fa-circle-notch fa-spin"></i> Loading</a>
         </div>
-        <p><span></span></p>
+        <p>{{ name ? name : user.name }} <span>{{ email ? email : user.email }}</span></p>
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Edit your Profile
         </a>
       </div>
+
     </div>
     <div class="clearfix"></div>
     <br/>
@@ -76,6 +79,9 @@
           <!-- Search Input with Search Icon -->
           <!-- Buttons -->
           <div *ngIf="showProductList">
+
+            <h6 style="mso-ascii-font-family: fantasy">Your products (subscriptions)  <i class="fas fa-smile"></i> </h6>
+            <br><br>
             <button type="submit" (click)="addProduct()" >
               <i class="fa-solid fa-square-plus"></i>
             </button>
@@ -100,8 +106,8 @@
             <thead>
             <tr>
               <th>Title</th>
-              <th>Image</th>
-              <th>Description</th>
+            <!--  <th>Image</th>
+              -!--><th>Description</th>
               <th>Key Feature</th>
               <th>Price</th>
               <th>Actions</th>
@@ -110,10 +116,10 @@
             <tbody>
             <tr *ngFor="let p of filteredProd">
               <td>{{ p.title }}</td>
-              <td>{{ p.image }}</td>
-              <td>{{ p.description }}</td>
+             <!-- <td>{{ p.image }}</td>
+              -!--><td>{{ p.description }}</td>
               <td>{{ p.key_feature }}</td>
-              <td>{{ p.prix }}</td>
+              <td>{{ p.prix }}$</td>
               <td>
                 <!-- Edit and Delete buttons -->
                 <div class="btn-group" role="group" aria-label="Action buttons">

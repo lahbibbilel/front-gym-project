@@ -12,7 +12,7 @@ export class PanelService {
 
 //public baseUrl = 'http://54.174.207.177:3000/panel'
 
-  public baseUrl = 'http://localhost:3000/panel'
+  public baseUrl = 'http://34.203.221.205:3000/panel'
 
   getPanier(): Observable<any> {
     return this.http.get<any>(this.baseUrl).pipe(

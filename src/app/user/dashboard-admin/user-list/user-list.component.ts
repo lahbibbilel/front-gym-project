@@ -49,14 +49,14 @@ export class UserListComponent implements OnInit {
 
   addUser() {
     Swal.fire({
-      title: 'Add Product',
+      title: 'Add User',
       html:
         '<input id="role" class="swal2-input" placeholder="role">' +
         '<input id="name" class="swal2-input" placeholder="name">' +
         '<input id="username" class="swal2-input" placeholder="username">' +
         '<input id="lastname" class="swal2-input" placeholder="lastname">' +
         '<input id="email"  class="swal2-input" placeholder="email">' +
-        '<input id="password"  class="swal2-input" placeholder="password">'
+        '<input id="password"  class="swal2-input" placeholder="password" type="password">'
       ,
       focusConfirm: false,
       preConfirm: () => {
@@ -85,18 +85,23 @@ export class UserListComponent implements OnInit {
         this.userService.addUser(newUser).subscribe(
           (data: any) => {
             console.log(data)
+            this.refresh()
           }
         )
-        console.log('New Product:', newUser);
-        // You should also perform the necessary service call to add the product to your database
-      }
+        console.log('New User:', newUser);
+        Swal.fire({
+          title: 'Success!',
+          text: 'User added with success.',
+          icon: 'success',
+        });
+       }
     });
   }
 
 
   editUser(usertId: string, updatedUser: any) {
     Swal.fire({
-      title: 'Edit Product',
+      title: 'Edit User',
       html:
         '<input id="role" class="swal2-input" value="' + updatedUser.role + '">' +
         '<input id="name" class="swal2-input" value="' + updatedUser.name + '">' +
@@ -134,8 +139,14 @@ export class UserListComponent implements OnInit {
         this.userService.editUser(usertId, updatedData).subscribe(
           (data: any) => {
             console.log('user Updated:', data);
-            // Optionally, update the displayed product list or perform any action needed after editing a product
-          },
+            Swal.fire({
+              title: 'Success!',
+              text: 'User updated successfully.',
+              icon: 'success',
+            });
+            this.refresh()
+
+            },
           (error: any) => {
             console.error('Error updating user:', error);
             // Handle error scenarios here
@@ -149,7 +160,7 @@ export class UserListComponent implements OnInit {
   deleteUser(userId: string) {
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You will not be able to recover this product!',
+      text: 'You will not be able to recover this user!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -160,7 +171,7 @@ export class UserListComponent implements OnInit {
         // Send delete request to Node.js backend
         this.userService.deleteUser(userId).subscribe(
           () => {
-            Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+            Swal.fire('Deleted!', 'Your user has been deleted.', 'success');
             // Optionally, update the product list after deletion
             this.refreshUserList();
           },
@@ -179,9 +190,14 @@ export class UserListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.user = data;
+this.refresh()
       }
     );
   }
+  refresh(): void {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);  }
 
 
 }

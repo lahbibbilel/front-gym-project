@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoginService} from "../../login/login.service";
 import {ProductsService} from "../../homebase/products.service";
 import Swal from 'sweetalert2';
 import {PanelService} from "./panel.service";
-import {Observable} from "rxjs";
+import {interval, Observable, Subscription} from "rxjs";
 import {BankService} from "./bank.service";
 import {Bank} from "./bank";
 import {HttpClient} from "@angular/common/http";
@@ -22,14 +22,20 @@ export class DashboardUserComponent implements OnInit {
 
   user: any = {};
   name: string | null = null;
-  imgSrc: string | null = null; // Define the variable to hold the image URL
+  imgSrc: string | null = null;
 
   product!:any
   panier:any = {};
   _id:any
   email : string |null = null
-  public userId!: string | null; // Déclaration de userId
-  public filteredPanier: any[] = []; // Nouvelle propriété pour les éléments filtrés du panier
+  public userId!: string | null;
+  public filteredPanier: any[] = [];
+public p: any
+  public a!: string
+  public b!: string
+
+  showProduct: boolean = true;
+  showPanel: boolean = false;
 
   constructor(
     public authService: LoginService,
@@ -38,10 +44,41 @@ export class DashboardUserComponent implements OnInit {
     public bank : BankService,
     public http : HttpClient,
     public loginServ : LoginService,
-    public profil: ProfilService
+    public profil: ProfilService,
+    private cdr: ChangeDetectorRef
+
   ) {}
+  private updateSubscription!: Subscription;
+
+  refresh(): void {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);  }
+
+  showProfileImage() {
+    const imageBase64 = this.loginServ.getImage();
+
+    if (imageBase64) {
+      Swal.fire({
+        imageUrl: `data:image;base64,${imageBase64}`,
+        imageAlt: 'User Profile Image',
+        width: 600, // Réglez la largeur selon vos besoins
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    }
+  }
+
 
   ngOnInit(): void {
+  //  this.updateSubscription = interval(3000).subscribe(
+  //    (val) => { this.panier});
+    this.cdr.detectChanges();  // Detect changes to trigger a reload
+
+ //   this.updateUserImage()
+   // this.updateUser()
+   // this.addToPanel(this.a,this.b)
+  //  this.deletePanel(this.p)
     const imageBase64 = this.loginServ.getImage();
     if (imageBase64) {
       this.imgSrc = `data:image;base64,${imageBase64}`; // Set imgSrc directly with the Base64 string
@@ -120,6 +157,7 @@ export class DashboardUserComponent implements OnInit {
 //    }
 
   }
+
   deletePanel(panelId: string) {
     Swal.fire({
       title: 'Are you sure?',
@@ -136,7 +174,9 @@ export class DashboardUserComponent implements OnInit {
           () => {
             Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
             // Optionally, update the product list after deletion
-            this.refreshPanelList();
+           this.refreshPanelList();
+            this.cdr.detectChanges();  // Detect changes to trigger a reload
+
           },
           (error) => {
             console.error('Error deleting product:', error);
@@ -151,20 +191,21 @@ export class DashboardUserComponent implements OnInit {
     this.panel.getPanier().subscribe(
       (data: any) => {
         console.log(data);
+        this.refresh(); // Refresh the page after updating the panel list
+
       }
     );
   }
 
-
   addToPanel(userId: string, productId: string) {
     // Afficher une alerte avec les ID dans les deux premiers champs d'entrée
     Swal.fire({
-      title: 'Ajouter à votre panel',
+      title: 'Add to your panel',
       html:
         `<input id="swal-input1"  class="swal2-input" style="display: none;" value="${userId}">` +
         `<input id="swal-input2" class="swal2-input" style="display: none;" value="${productId}">` +
         `<input id="swal-input3" type="number" aria-placeholder="number months" class="swal2-input" placeholder="Number of months">` +
-        `<input id="swal-input4" class="swal2-input" placeholder="card number Iban">`,
+        `<input id="swal-input4" type="password" class="swal2-input" placeholder="card number Iban">`,
       focusConfirm: false,
       preConfirm: () => {
         return [
@@ -184,6 +225,8 @@ export class DashboardUserComponent implements OnInit {
 
         // Vérifier si la carte bancaire saisie est valide
         const cardExists = this.cardNumbersBanque.includes(value4);
+        this.cdr.detectChanges();  // Detect changes to trigger a reload
+
         if (!cardExists) {
           Swal.fire({
             icon: 'error',
@@ -201,11 +244,16 @@ export class DashboardUserComponent implements OnInit {
           cardNumber: value4
         };
         this.savePanel(panelData);
+        this.cdr.detectChanges();  // Detect changes to trigger a reload
+
+//        this.refreshPanelList();
+
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Add with success!'
         });
+
       }
     });
   }
@@ -215,6 +263,9 @@ export class DashboardUserComponent implements OnInit {
       (data: any) => {
         // Gérer la réussite de l'enregistrement
         console.log('Panel saved successfully:', data);
+        this.refreshPanelList();
+        this.cdr.detectChanges();  // Detect changes to trigger a reload
+
         // Vous pouvez effectuer d'autres actions ici si nécessaire
       },
       (error: any) => {
@@ -247,7 +298,7 @@ export class DashboardUserComponent implements OnInit {
   }
   paymentSuccess: boolean = false;
 
-  payedBank(cardNumber: string) {
+    payedBank(cardNumber: string) {
     // Vérifier si la carte bancaire saisie est valide
     const cardExists = this.cardNumbersBanque.includes(cardNumber);
     if (!cardExists) {
@@ -271,7 +322,7 @@ export class DashboardUserComponent implements OnInit {
       Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Le paiement a été effectué avec succès!'
+        text: 'payment with success!'
       });
       // Trouver l'index de l'élément réussi dans filteredPanier
       const index = this.filteredPanier.findIndex((item: any) => item.cardNumber === cardNumber);
@@ -283,14 +334,14 @@ export class DashboardUserComponent implements OnInit {
       const newSolde = solde - selectedProduct.productPrice;
       //http://54.174.207.177:3000/bank/
       // Effectuer une requête HTTP PUT pour mettre à jour le solde dans la banque
-      this.http.put(`http://localhost:3000/bank/${cardNumber}`, { solde: newSolde })
+      this.http.put(`http://34.203.221.205:3000/bank/${cardNumber}`, { solde: newSolde })
         .subscribe(
           (response) => {
-            console.log('Solde mis à jour dans la banque:', response);
+            console.log('Solde updated with bank:', response);
             // Ajouter d'autres actions si nécessaire après la mise à jour du solde
           },
           (error) => {
-            console.error('Erreur lors de la mise à jour du solde:', error);
+            console.error('Erreur updated solde with bank:', error);
             // Gérer les erreurs ici, comme afficher une alerte à l'utilisateur
           }
         );
@@ -299,7 +350,7 @@ export class DashboardUserComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Erreur',
-        text: 'Le solde de la carte n\'est pas suffisant pour effectuer le paiement.'
+        text: 'the solde card \' has error .'
       });
     }
   }
@@ -358,18 +409,17 @@ export class DashboardUserComponent implements OnInit {
   }
 
   showCart: boolean = false; // Définir la variable pour contrôler l'affichage du panier
-  toggleCartVisibility() {
-    this.showCart = !this.showCart;
+  toggleProductVisibility() {
+    this.showProduct = true;
+    this.showPanel = false;
   }
 
-  showTable: boolean = false; // Définir la variable pour contrôler l'affichage du panier
-  toggleTableVisibility() {
-    this.showTable = !this.showTable;
+  togglePanelVisibility() {
+    this.showProduct = false;
+    this.showPanel = true;
   }
 
-
-
-  updateUser() {
+updateUser() {
     const userId = this.loginServ.getId();
 
     if (userId) {
@@ -414,6 +464,8 @@ export class DashboardUserComponent implements OnInit {
                   text: 'User updated successfully.',
                   icon: 'success',
                 });
+                this.refreshPanelList();
+
               },
               (error: any) => {
                 console.error('Error updating user:', error);
@@ -468,6 +520,10 @@ export class DashboardUserComponent implements OnInit {
                     icon: 'success',
                   });
                 };
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000); // Reload after a delay of 1 second (1000 milliseconds)
+
               },
               (error: any) => {
                 console.error('Error updating user image:', error);

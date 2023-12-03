@@ -18,9 +18,9 @@ const routes: Routes = [
   {path:'user/login',component:LoginComponent},
   {path:'user/dashboardUser',component:DashboardUserComponent,canActivate:[GuardGuard]},
   {path:'homebase',component:HomebaseComponent},
-  {path:'user/dashboardAdmin',component:DashboardAdminComponent},
-  {path:'user/dashboardAdmin/userList',component:UserListComponent},
-  {path:'user/dashboardAdmin/panel',component:PanelListComponent}
+  {path:'user/dashboardAdmin',component:DashboardAdminComponent,canActivate:[GuardGuard]},
+  {path:'user/dashboardAdmin/userList',component:UserListComponent,canActivate:[GuardGuard]},
+  {path:'user/dashboardAdmin/panel',component:PanelListComponent,canActivate:[GuardGuard]}
 
 
 

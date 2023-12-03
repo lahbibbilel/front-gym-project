@@ -66,7 +66,7 @@ export class PanelListComponent implements OnInit {
 
         this.prodService.getProductById(this.product).subscribe(
           (productData: Product[]) => {
-            console.log("product in panier", productData);
+            console.log("product in panel", productData);
             this.productSearch = productData;
 
             // Perform filtering or other actions after getting product data
@@ -138,11 +138,18 @@ export class PanelListComponent implements OnInit {
     });
   }
 
+  refresh(): void {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);  }
+
+
   refreshPanelList() {
     this.panelService.getPanier().subscribe(
       (data: any) => {
         console.log(data);
         this.panel = data;
+        this.refresh()
       }
     );
   }
