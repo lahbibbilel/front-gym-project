@@ -10,7 +10,7 @@ export class ProfilService {
   constructor(private http : HttpClient) { }
 
 //url = "http://localhost:3000/user/"
-  url = "http://34.203.221.205:3000/user/"
+  url = "http://3.92.31.108:3000/user/"
 
   editUser(id : any,updatedUser:any) : Observable<any>
   {

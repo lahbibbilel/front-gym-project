@@ -10,6 +10,7 @@ import {HomebaseComponent} from "./homebase/homebase.component";
 import {DashboardAdminComponent} from "./user/dashboard-admin/dashboard-admin.component";
 import {UserListComponent} from "./user/dashboard-admin/user-list/user-list.component";
 import {PanelListComponent} from "./user/dashboard-admin/panel-list/panel-list.component";
+import {ForTestComponent} from "./for-test/for-test.component";
 
 const routes: Routes = [
   { path: '', component: HomebaseComponent },
@@ -20,7 +21,10 @@ const routes: Routes = [
   {path:'homebase',component:HomebaseComponent},
   {path:'user/dashboardAdmin',component:DashboardAdminComponent,canActivate:[GuardGuard]},
   {path:'user/dashboardAdmin/userList',component:UserListComponent,canActivate:[GuardGuard]},
-  {path:'user/dashboardAdmin/panel',component:PanelListComponent,canActivate:[GuardGuard]}
+  {path:'user/dashboardAdmin/panel',component:PanelListComponent,canActivate:[GuardGuard]},
+  {path:'user/dashboardAdmin/panel',component:ForTestComponent}
+
+
 
 
 

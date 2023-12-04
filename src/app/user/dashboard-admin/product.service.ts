@@ -8,7 +8,7 @@ import {HttpClient} from "@angular/common/http";
 export class ProductService {
 
   constructor(private http : HttpClient) { }
-  url ="http://34.203.221.205:3000/product"
+  url ="http://3.92.31.108:3000/product"
   getProduct():Observable<any>
   {
     return this.http.get(this.url)

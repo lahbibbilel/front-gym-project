@@ -20,6 +20,7 @@ import { HomebaseComponent } from './homebase/homebase.component';
 import { DashboardAdminComponent } from './user/dashboard-admin/dashboard-admin.component';
 import { UserListComponent } from './user/dashboard-admin/user-list/user-list.component';
 import { PanelListComponent } from './user/dashboard-admin/panel-list/panel-list.component';
+import { ForTestComponent } from './for-test/for-test.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PanelListComponent } from './user/dashboard-admin/panel-list/panel-list
     DashboardAdminComponent,
     UserListComponent,
     PanelListComponent,
+    ForTestComponent,
   ],
   imports: [
     HttpClientModule,
