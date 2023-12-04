@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 export class UserlistService {
 
   constructor(private http : HttpClient) { }
-url = "http://34.203.221.205:3000/user"
+url = "http://3.92.31.108:3000/user"
   getUser():Observable<any>
   {
     return this.http.get(this.url)
