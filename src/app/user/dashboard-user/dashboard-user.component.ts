@@ -334,7 +334,7 @@ public p: any
       const newSolde = solde - selectedProduct.productPrice;
       //http://54.174.207.177:3000/bank/
       // Effectuer une requête HTTP PUT pour mettre à jour le solde dans la banque
-      this.http.put(`http://3.92.31.108:3000/bank/${cardNumber}`, { solde: newSolde })
+      this.http.put(`http://localhost:3000/bank/${cardNumber}`, { solde: newSolde })
         .subscribe(
           (response) => {
             console.log('Solde updated with bank:', response);

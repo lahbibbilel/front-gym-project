@@ -7,6 +7,9 @@ import {User} from "../user/user";
 import {Router} from "@angular/router";
 import {TrainerService} from "./trainer.service";
 
+
+
+
 @Component({
   selector: 'app-homebase',
   templateUrl: './homebase.component.html',
@@ -25,11 +28,12 @@ export class HomebaseComponent implements OnInit {
   ngOnInit(): void {
     this.service.getProducts().subscribe(
       (data: any[]) => {
+        console.log("test",data)
         this.product = data;
-        console.log('Users fetched successfully:', this.product);
+        console.log('Abonnement fetched successfully:', this.product);
       },
       (error: any) => {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching Abonnement:', error);
       }
     );
 
@@ -64,9 +68,6 @@ export class HomebaseComponent implements OnInit {
         origin: "bottom",
         duration: 1000,
       };
-
-
-
 
       // header container
       ScrollReveal().reveal(".header__image img", {

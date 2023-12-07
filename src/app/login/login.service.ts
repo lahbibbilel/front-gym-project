@@ -12,7 +12,8 @@ export class LoginService {
   constructor(private http : HttpClient,private router : Router) { }
 
  // Url = "http://54.174.207.177:3000"
- Url = 'http://3.92.31.108:3000';
+ //Url = 'http://3.92.31.108:3000';
+  Url = 'http://localhost:3000';
 
   private authTokenKey = 'authToken';
   private name = 'name';

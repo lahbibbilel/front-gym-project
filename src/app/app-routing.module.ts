@@ -15,14 +15,15 @@ import {ForTestComponent} from "./for-test/for-test.component";
 const routes: Routes = [
   { path: '', component: HomebaseComponent },
   {path:'user',component:UserComponent},
-  {path:'user/getAll',component:GetAllComponent},
   {path:'user/login',component:LoginComponent},
   {path:'user/dashboardUser',component:DashboardUserComponent,canActivate:[GuardGuard]},
   {path:'homebase',component:HomebaseComponent},
   {path:'user/dashboardAdmin',component:DashboardAdminComponent,canActivate:[GuardGuard]},
   {path:'user/dashboardAdmin/userList',component:UserListComponent,canActivate:[GuardGuard]},
   {path:'user/dashboardAdmin/panel',component:PanelListComponent,canActivate:[GuardGuard]},
-  {path:'user/dashboardAdmin/panel',component:ForTestComponent}
+{path:'testing',component:ForTestComponent},
+  {path:'user/getAll',component:GetAllComponent},
+
 
 
 
